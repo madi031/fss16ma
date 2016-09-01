@@ -18,3 +18,11 @@ G Gousios and D Spinellis, "GHTorrent: Github’s Data from a Firehose". Mining 
 3. Patterns - There can be period of inactivity while processing these huge amount of datas and there should be some kind of monitoring to identify this. Here, they have employed a mechanism to monitor the daily event retrieval activity in order to make sure that such problems will not remain undetected for more than a few hours. When we retrieve huge amount of data, it is best to distribute the data among different system to manage the network and storage capacity and implement a mechanism to consolidate the data.
 
 4. Related work - Howison et al, in the FLOSSmole project, collected meta data from OSS projects hosted on the Sourceforge site and offers both dataset and an online query interface. Alitheia Core project, provides an analysis platform and an accompanying dataset containing process and project metrics. Rahman and Devanbu exploited Git's strong authorship capabilities to study the impact of ownership and developer experience on software defects. Capilupi and Cortazar used Git's ability to track commit time at the developer's cite to produce a round the clock development bar chart similar to this paper.
+
+## iv Improvements
+
+1. GHTorrent uses currently retrieve raw event contents and store them in MongoDB collections. To reconstruct the GitHub's data scheme, it has to restart the events from the initial state, which might not be available all the time.
+
+2. They can also automate the generation and distribution of torrent files through RSS feeds and scripts and automatically download and update remote databases.
+
+3. They can also write tools or platforms that are able to process the vast amount of data that GHTorrent offers, which will help the research team community to access the data easier.
