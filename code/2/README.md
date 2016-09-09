@@ -60,3 +60,22 @@ rank ,         name ,    med   ,  iqr
    1 ,         bnet ,      11  ,     6 (        -----  |*   ------    ), 6.00,  9.00, 11.00, 14.00, 18.00
    
 ```
+
+## Table Reader
+
+Check out the code [here] (https://github.com/madi031/fss16ma/tree/master/code/2).
+
+The output of the reader is below:
+
+```
+outlook
+Mode: sunny     Entropy: 1.57740628285
+temperature-
+Mean: 73.5714285714     Standard deviation: 6.57166745863
+<humidity
+Mean: 81.6428571429     Standard deviation: 10.285218242
+windy
+Mode: FALSE     Entropy: 0.985228136034
+>play
+Mean: 1.07142857143     Standard deviation: 0.997248963151
+```
