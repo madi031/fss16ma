@@ -9,6 +9,7 @@ class ZeroRPredictor:
     def train(self, filename) :
         self.prediction = None
         count = -1
+        keyCount = 1
         file = open(filename)
         startData = False
         for record in file :
@@ -19,8 +20,10 @@ class ZeroRPredictor:
                 classCount = record.split(",")[-1]
                 currentCount = self.count.get(classCount, 0)
                 self.count[classCount] = currentCount + 1
-                self.classNumber['no'] = 1
-                self.classNumber['yes'] = 2
+                for key in self.count :
+                    self.classNumber[key] = keyCount
+                    keyCount += keyCount
+                keyCount = 1
                 if self.count[classCount] > count :
                     count = self.count[classCount]
                     self.prediction = classCount
