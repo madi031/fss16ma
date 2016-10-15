@@ -11,4 +11,5 @@ class kNN:
 if __name__ == "__main__" : 
     training_table = tableReader.TableReader(sys.argv[1])
     test_table = tableReader.TableReader(sys.argv[2])
-    kNN.oneNN(training_table, test_table)
+    k = kNN()
+    k.oneNN(training_table, test_table)

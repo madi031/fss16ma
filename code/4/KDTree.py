@@ -1,18 +1,21 @@
-import sys, tableReader as table
+import sys, tableReader, collections
 
 class KDTree :
     node = collections.namedtuple("Node", 'point axis left right')
+    def __iniy__(self, t):
+        self.table = t    
+        self.root = []
     def kdTree(self, start, end, k, axis = 0) :
         if start == end or axis >= k :
             return None
-        temp_rows = table.rows[start : end]
+        temp_rows = self.table.rows[start : end]
         sorted(temp_rows, key = lambda x : x[axis])
-        table.rows[start : end] = temp_rows
-        median = table.rows[start + len(temp_rows)//2]
+        self.table.rows[start : end] = temp_rows
+        median = self.table.rows[start + len(temp_rows)//2]
         return self.node(median, axis, self.kdTree(start, median, axis + 1), self.kdTree(median+1, end, axis + 1))
         
     def kdTree_predict(self, row) :
-        best = [None, float('Inf)]
+        best = [None, float('Inf')]
         
         def recursive_search(here):
             if here is None :

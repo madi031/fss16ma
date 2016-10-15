@@ -1,4 +1,4 @@
-import sys, num, sym, csvReader, math
+import sys, num, sym, csvReader, math, arffReader
 
 class TableReader :
     def __init__(self, filename) :
@@ -8,6 +8,8 @@ class TableReader :
         fileType = filename.split(".")[-1]
         if fileType == "csv" :
             self.rowsGenerator = csvReader.csv(filename)
+        if fileType == "arff":
+            self.rowsGenerator = arffReader.read(filename)
         self.generateTable()
         
     def generateTable(self) :
