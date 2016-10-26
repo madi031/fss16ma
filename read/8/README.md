@@ -29,15 +29,15 @@ iii2. Research Question -1: Why do GitHub users follow others and who are the mo
   - General interests
   - Easy access to people - like a bookmark
   
-  These facts show that influencers can impact easily in the working pattern in Github. 
+These facts show that influencers can impact easily in the working pattern in Github. 
   
-  Followers also believed that the popular people on Github are experts
+Followers also believed that the popular people on Github are experts
   
-  Collaboration is more a perceived benefit than an actual benefit
+Collaboration is more a perceived benefit than an actual benefit
   
-  Finding new projects/ trends likely not a well-known benefit
+Finding new projects/ trends likely not a well-known benefit
   
-  Reason people donot follow:
+Reason people donot follow:
   
   - No benefit is seen
   - Busy
