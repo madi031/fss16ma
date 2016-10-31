@@ -1,17 +1,24 @@
-import sys, tableReader, collections
+import sys, Table, collections
 
 class KDTree :
-    node = collections.namedtuple("Node", 'point axis left right')
-    def __iniy__(self, t):
+    def __init__(self, t, k,m):
         self.table = t    
-        self.root = []
-    def kdTree(self, start, end, k, axis = 0) :
-        if start == end or axis >= k :
+        self.root = None
+        self.m = m
+        self.k = min(len(self.table.cols)-1, k)
+        self.node = collections.namedtuple("Node", 'point axis left right')
+    
+    
+    def kdTree(self, start, end, axis = 0) :
+        if (end - start <= self.m) or axis >= self.k :
             return None
+            
         temp_rows = self.table.rows[start : end]
         sorted(temp_rows, key = lambda x : x[axis])
         self.table.rows[start : end] = temp_rows
-        median = self.table.rows[start + len(temp_rows)//2]
+        
+        median = len(temp_rows) //2 
+        median_point = self.table.rows[start + len(temp_rows)//2]
         return self.node(median, axis, self.kdTree(start, median, axis + 1), self.kdTree(median+1, end, axis + 1))
         
     def kdTree_predict(self, row) :
@@ -22,11 +29,11 @@ class KDTree :
                 return
             point, axis, left, right = here
         
-            here_sd = self.table.row_distance(point, row)
+            here_sd = self.table.row_distance(point, row) **2 
             if here_sd < best[1] :
                 best[:] = point, here_sd
             
-            diff = self.table.cols[axis].dist(point[axis], row[axis])
+            diff = self.table.cols[axis].dist(row[axis], point[axis])
             close, away = (left, right) if diff <= 0 else (right, left)
         
             recursive_search(close)
@@ -34,5 +41,5 @@ class KDTree :
                 recursive_search(away)
                 
         recursive_search(self.root)
-        return best[0][-1]
+        return (row[-1], best[0][-1])
         
