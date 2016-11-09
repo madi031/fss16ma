@@ -1,4 +1,3 @@
-from sklearn import preprocessing
 import sys, num, sym, csvReader, math, arffReader
 
 class Row :
@@ -130,4 +129,11 @@ def clone(table):
     
 if __name__ == "__main__" :
     table = Table(sys.argv[1])
-    
+    print table.showStats()
+    print table.rows[0]
+    print "Closest : ",table.find_nearest(table.rows[0])
+    print "Furthest : ",table.find_furthest(table.rows[0])
+    print ""
+    print table.rows[1]
+    print "Closest : ",table.find_nearest(table.rows[1])
+    print "Furthest : ",table.find_furthest(table.rows[1])
