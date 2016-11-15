@@ -30,6 +30,7 @@ class preprocess:
                 allValues.append(row[colPos])
             maxValue = max(allValues)
             minValue = min(allValues)
+            print maxValue, minValue
 
             binWidth = (maxValue - minValue)/5
 
@@ -43,9 +44,33 @@ class preprocess:
                 table.rows[i][colPos] =  actual_value 
         return table
 
-	def freq5bin(table):
-		table.sort()
-		result = []
-		length = len(table)
-		# for i in range(5):
-		# 	temp = 
+    def freq5bin(self, table):
+        numOfInstances = len(table.rows)
+        
+        for colPos in range(len(table.cols)-1):
+            allValues = {} 
+            for row in table.rows:
+                allValues[row.rid] = row[colPos]
+
+            sortedIndex = sorted(allValues, key=allValues.__getitem__)
+            
+            for i, index in enumerate(sortedIndex):
+                table.rows[index-1][colPos] = math.floor(i/math.ceil(numOfInstances/5.0)) + 1
+        
+        return table
+
+    # def pca(self, table):
+    #     temp =[]
+    # for i, row in enumerate(table.rows):
+    #     temp.append(table.rows[row.rid-1])
+        
+    # print temp
+    # X = numpy.array(temp)
+    # pca = PCA(n_components = len(table.cols))
+    # pca.fit(X)
+    # print pca.explained_variance_ratio_
+
+    # c = len(table.cols)
+    # ipca = IncrementalPCA(n_components= c)
+    # ipca.fit(X)
+    # print ipca.transform(X)

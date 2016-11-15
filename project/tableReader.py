@@ -1,6 +1,9 @@
 import sys, math
-import num, sym, csvReader, arffReader, preprocess 
+import num, sym, csvReader, arffReader, preprocess, learners 
 import numpy
+from sklearn.decomposition import IncrementalPCA, PCA
+
+
 
 class Row :
     rid = 0
@@ -145,21 +148,11 @@ def clone(table):
 if __name__ == "__main__":
     table = Table(sys.argv[1])
     print table.showStats()
-    # newTable = preprocess.preprocess().norm(table)
     
-    # newTable = preprocess.preprocess().width5bin(table)    
+    # newTable = preprocess.preprocess().freq5bin(table)    
     # for i, row in enumerate(newTable.rows):
-    #     print newTable.rows[i]
+    #     print newTable.rows[i]   
+    
 
-    # for i, row in enumerate(table.rows):
-    #     print table.rows[i]
-            
-    
-    
-    # print table.rows[0]
-    # print "Closest : ",table.find_nearest(table.rows[0])
-    # print "Furthest : ", table.find_furthest(table.rows[0])
-    # print ""
-    # print table.rows[1]
-    # print "Closest : ",table.find_nearest(table.rows[1])
-    # print "Furthest : ", table.find_furthest(table.rows[1])
+
+    learners.learners().cartYes(table)
