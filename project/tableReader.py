@@ -1,8 +1,6 @@
-import sys, math
-import num, sym, csvReader, arffReader, preprocess, learners 
-import numpy
-from sklearn.decomposition import IncrementalPCA, PCA
-
+import sys, math, collections
+import num, sym, csvReader, arffReader, preprocess, learners, errorMeasurement, crossValidation
+import numpy, random
 
 
 class Row :
@@ -148,11 +146,10 @@ def clone(table):
 if __name__ == "__main__":
     table = Table(sys.argv[1])
     print table.showStats()
-    
-    # newTable = preprocess.preprocess().freq5bin(table)    
-    # for i, row in enumerate(newTable.rows):
-    #     print newTable.rows[i]   
-    
 
+    # newTable = preprocess.preprocess().pca(table, len(table.cols)-1)  
+    # print learners.learners().pcr(table)
 
-    learners.learners().cartYes(table)
+    crossValidation.crossValidation().cv(table)            
+#     for row in table.rows:
+#         print row

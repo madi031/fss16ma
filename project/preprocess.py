@@ -1,5 +1,6 @@
 from sklearn import preprocessing
 import tableReader, math, numpy
+from sklearn.decomposition import PCA
 
 class preprocess:
     def norm(self, table):
@@ -59,18 +60,25 @@ class preprocess:
         
         return table
 
-    # def pca(self, table):
-    #     temp =[]
-    # for i, row in enumerate(table.rows):
-    #     temp.append(table.rows[row.rid-1])
-        
-    # print temp
-    # X = numpy.array(temp)
-    # pca = PCA(n_components = len(table.cols))
-    # pca.fit(X)
-    # print pca.explained_variance_ratio_
+    def pca(self, table, n = 2):
+        X =[]
+        Y =[]
+        for i, row in enumerate(table.rows):
+            X.append(table.rows[row.rid-1][:-1])
+            Y.append(table.rows[row.rid-1][-1])
+            
+        pca = PCA(n_components = n)
+        pca.fit(X)
+        result = pca.transform(X)
 
-    # c = len(table.cols)
-    # ipca = IncrementalPCA(n_components= c)
-    # ipca.fit(X)
-    # print ipca.transform(X)
+        newTable = tableReader.Table()
+        for i,row in enumerate(result):
+            row = numpy.append(row, Y[i])
+            newTable.add_row(row)
+        
+        return newTable 
+
+
+
+
+        
