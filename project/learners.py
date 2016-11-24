@@ -59,8 +59,8 @@ class learners:
         return errorMeasurement.errorMeasurement().calculateErrorMeasure(actual, predicted) 
 
     def pcr(self, table):
+        #Call PCA and then cross val is performed before lReg 
         newTable = preprocess.preprocess().pca(table)  
-
         return self.lReg(newTable)
 
     def abe0_kNN(self,trainingData, testData,k):

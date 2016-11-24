@@ -4,6 +4,14 @@ def min(x,y) : return x if x<y else y
 class Num:
   def __init__(i):
     i.mu,i.n,i.m2,i.up,i.lo = 0,0,0,-10e32,10e32
+
+  def is_number(s):
+    try:
+      float(s)
+    except:
+      return False
+    else:
+      return True
     
   def add(i,x):
     i.n += 1
