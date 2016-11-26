@@ -15,6 +15,7 @@ class preprocess:
                     if not self.is_number(val):
                         table.rows[i][colPos] = medianValue
         return table
+    
     def is_number(self,i):
         try:
             float(i)
@@ -24,15 +25,13 @@ class preprocess:
 
     def norm(self, table):
         for colPos in range(len(table.cols)-1):
-            allValues = [] 
-            for row in table.rows:
-                allValues.append(row[colPos])
+            allValues = [row[colPos] for row in table.rows]
 
             maxValue = max(allValues)
             minValue = min(allValues)
 
             for i, actual_value in enumerate(allValues):
-                table.rows[i][colPos] =  float(actual_value - minValue)/(maxValue - minValue) 
+                table.rows[i][colPos] =  float(actual_value - minValue)/max((maxValue - minValue),1) 
 
         return table
 
@@ -45,18 +44,12 @@ class preprocess:
 
     def width5bin(self, table):        
         for colPos in range(len(table.cols)-1):
-            allValues = [] 
-            for row in table.rows:
-                allValues.append(row[colPos])
+            allValues = [row[colPos] for row in table.rows]
             maxValue = max(allValues)
             minValue = min(allValues)
-            print maxValue, minValue
-
+            
             binWidth = (maxValue - minValue)/5
-
-            bins = []
-            for i in range(5):
-                bins.append(minValue + binWidth*i )
+            bins = [minValue + binWidth * i for i in range(5)]
 
             allValues = numpy.digitize(allValues, bins)
 
@@ -80,11 +73,8 @@ class preprocess:
         return table
 
     def pca(self, table, n = 2):
-        X =[]
-        Y =[]
-        for i, row in enumerate(table.rows):
-            X.append(table.rows[row.rid-1][:-1])
-            Y.append(table.rows[row.rid-1][-1])
+        X = [table.rows[row.rid -1][:-1] for row in table.rows]
+        Y = [table.rows[row.rid-1][-1] for row in table.rows]
             
         pca = PCA(n_components = n)
         pca.fit(X)

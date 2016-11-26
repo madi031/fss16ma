@@ -148,18 +148,31 @@ def clone(table):
 if __name__ == "__main__":
     table = Table(sys.argv[1])
     #print table.showStats()
-
-
-    #newTable = preprocess.preprocess().pca(table, len(table.cols)-1) 
-    
+    if len(sys.argv) > 3:
+        solo_preprocess = sys.argv[2]
+        solo_learner = sys.argv[3]
+    # else:
+    #     solo_preprocess = "none"
+    #     solo_learner = "abe0_1NN"
+        
     table = preprocess.preprocess().missingValue(table)
     
-    newTable = preprocess.preprocess().norm(table) 
+    if solo_preprocess == "norm":
+        newTable = preprocess.preprocess().norm(table) 
+    elif solo_preprocess == "pca": 
+        newTable = preprocess.preprocess().pca(table, len(table.cols)-1)
+    elif solo_preprocess == "freq5bin":
+        newTable = preprocess.preprocess().freq5bin(table)
+    elif solo_preprocess == "log":
+        newTable = preprocess.preprocess().logarithm(table)
+    elif solo_preprocess == "width5bin":
+        newTable = preprocess.preprocess().width5bin(table)
+    else:
+        newTable = table
 
-    # for row in newTable.rows:
-    #     print row
-    # # print learners.learners().pcr(table)
+    if solo_learner == "pcr":
+        newTable = preprocess.preprocess().pca(newTable)
 
-    #crossValidation.crossValidation().cv(table)            
+    crossValidation.crossValidation().cv(newTable, solo_learner)            
 #     for row in table.rows:
 #         print row

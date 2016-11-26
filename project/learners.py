@@ -1,11 +1,6 @@
 import math
 import random
-from sklearn import tree
-import errorMeasurement, preprocess
-from sklearn import linear_model
-from sklearn.cross_decomposition import PLSRegression
-
-
+from sklearn import tree, linear_model, cross_decomposition
 
 class learners:
 
@@ -21,6 +16,7 @@ class learners:
         for i,row in enumerate(testData.rows):
             testX.append(testData.rows[i][:-1])
             testY.append(testData.rows[i][-1])
+        
         return trainX,trainY, testX, testY
 
     def cartNo(self,trainingData, testData):
@@ -30,10 +26,7 @@ class learners:
         clf = tree.DecisionTreeRegressor()
         clf = clf.fit(trainX,trainY)
 
-        predicted = clf.predict(testX)
-        actual = testY
-
-        return errorMeasurement.errorMeasurement().calculateErrorMeasure(actual, predicted)
+        return testY, clf.predict(testX)
 
     def lReg(self, trainingData, testData):
 
@@ -41,29 +34,22 @@ class learners:
 
         regr = linear_model.LinearRegression()
         regr.fit(trainX, trainY)
-        predicted = regr.predict(testX)
-        actual = testY
-
-
-        return errorMeasurement.errorMeasurement().calculateErrorMeasure(actual, predicted)
+        
+        return testY, regr.predict(testX)
 
     def plsr(self,trainingData, testData):
         
         trainX,trainY, testX, testY = self.splitXY(trainingData,testData)
 
-        pls2 = PLSRegression(n_components=2)
-        pls2.fit(trainX, trainY)
-        predicted = pls2.predict(testX)
-        actual = testY
-
-        return errorMeasurement.errorMeasurement().calculateErrorMeasure(actual, predicted) 
-
-    def pcr(self, table):
-        #Call PCA and then cross val is performed before lReg 
-        newTable = preprocess.preprocess().pca(table)  
-        return self.lReg(newTable)
+        plsrModel = cross_decomposition.PLSRegression(n_components=2)
+        plsrModel.fit(trainX, trainY)
+        
+        return testY, plsrModel.predict(testX)
 
     def abe0_kNN(self,trainingData, testData,k):
+
+        actual = []
+        predicted = []
 
         def knn(row) :
             distances = [(trainingData.row_distance(row, data), data[-1]) for data in trainingData.rows]
@@ -78,13 +64,12 @@ class learners:
                 classCounts[cl] = count = count + 1
                 if classCounts[max_class] < count :
                     max_class = cl
-            return (row[-1], max_class)
+            actual.append(row[-1])
+            predicted.append(max_class)
 
-        def predict(row) :
-            return knn(row)
-
-        
         for row in testData.rows:
-            print predict(row)
+            knn(row)
+
+        return actual, predicted
 
 
