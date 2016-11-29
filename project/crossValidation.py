@@ -1,4 +1,4 @@
-import tableReader, errorMeasurement, random, learners
+import tableReader, errorMeasurement, random, learners, stats
 class ErrorMeasure:    
     def __init__(self):
         self.mar = []
@@ -41,7 +41,9 @@ class crossValidation:
                     actual, predicted = learners.learners().lReg(trainData,testData)
 
                 x = errorMeasurement.errorMeasurement().calculateErrorMeasure(actual, predicted, errorMeasures)
-        
-        print x.mar
-        
-			
+        return x
+    @staticmethod
+    def error_metrics_to_file(base_filename, solo, errors):
+        mar_file = open(base_filename + "_mar.txt", "a")
+        for v in errors.mar :
+            mar_file.write(solo + "," + str(v) + "\n")

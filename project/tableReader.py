@@ -1,5 +1,5 @@
 import sys, math, collections
-import num, sym, csvReader, arffReader, preprocess, learners, errorMeasurement, crossValidation
+import num, sym, csvReader, arffReader, preprocess, learners, errorMeasurement, crossValidation, config, report
 import numpy, random
 
 
@@ -146,33 +146,44 @@ def clone(table):
 
 
 if __name__ == "__main__":
-    table = Table(sys.argv[1])
-    #print table.showStats()
-    if len(sys.argv) > 3:
-        solo_preprocess = sys.argv[2]
-        solo_learner = sys.argv[3]
-    # else:
-    #     solo_preprocess = "none"
-    #     solo_learner = "abe0_1NN"
-        
-    table = preprocess.preprocess().missingValue(table)
-    
-    if solo_preprocess == "norm":
-        newTable = preprocess.preprocess().norm(table) 
-    elif solo_preprocess == "pca": 
-        newTable = preprocess.preprocess().pca(table, len(table.cols)-1)
-    elif solo_preprocess == "freq5bin":
-        newTable = preprocess.preprocess().freq5bin(table)
-    elif solo_preprocess == "log":
-        newTable = preprocess.preprocess().logarithm(table)
-    elif solo_preprocess == "width5bin":
-        newTable = preprocess.preprocess().width5bin(table)
-    else:
-        newTable = table
 
-    if solo_learner == "pcr":
-        newTable = preprocess.preprocess().pca(newTable)
+    for dataset in config.datasets:
 
-    crossValidation.crossValidation().cv(newTable, solo_learner)            
-#     for row in table.rows:
-#         print row
+
+        for solo in config.solos:
+
+
+            table = Table(dataset)
+            #print table.showStats()
+            # if len(sys.argv) > 3:
+            #     solo_preprocess = sys.argv[2]
+            #     solo_learner = sys.argv[3]
+            # else:
+            solo_preprocess = solo.split(' ')[0]
+            solo_learner = solo.split(' ')[1]
+            
+            table = preprocess.preprocess().missingValue(table)
+            
+            if solo_preprocess == "norm":
+                newTable = preprocess.preprocess().norm(table) 
+            elif solo_preprocess == "pca": 
+                newTable = preprocess.preprocess().pca(table, len(table.cols)-1)
+            elif solo_preprocess == "freq5bin":
+                newTable = preprocess.preprocess().freq5bin(table)
+            elif solo_preprocess == "log":
+                newTable = preprocess.preprocess().logarithm(table)
+            elif solo_preprocess == "width5bin":
+                newTable = preprocess.preprocess().width5bin(table)
+            else:
+                newTable = table
+
+            if solo_learner == "pcr":
+                newTable = preprocess.preprocess().pca(newTable)
+
+            errors = crossValidation.crossValidation().cv(newTable, solo_learner)
+
+            dataset_name = dataset.split('/')[-1].split(".")[0]
+
+            crossValidation.crossValidation.error_metrics_to_file(dataset_name, solo, errors)     
+
+        report.generateScottKnott(dataset_name + "_mar.txt")      
