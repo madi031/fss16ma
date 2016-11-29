@@ -38,7 +38,10 @@ class preprocess:
     def logarithm(self, table):
     	for i in range(len(table.cols)-1):
             for row in table.rows:
-                row[i] = math.log(row[i])
+                try:
+                    row[i] = math.log(row[i])
+                except: 
+                    row[i] = math.log(row[i]+0.01)
     	
         return table
 
@@ -62,8 +65,8 @@ class preprocess:
         
         for colPos in range(len(table.cols)-1):
             allValues = {} 
-            for row in table.rows:
-                allValues[row.rid] = row[colPos]
+            for i, row in enumerate(table.rows):
+                allValues[i] = row[colPos]
 
             sortedIndex = sorted(allValues, key=allValues.__getitem__)
             
@@ -73,8 +76,13 @@ class preprocess:
         return table
 
     def pca(self, table, n = 2):
-        X = [table.rows[row.rid -1][:-1] for row in table.rows]
-        Y = [table.rows[row.rid-1][-1] for row in table.rows]
+        X = []
+        Y = []
+        for i, row in enumerate(table.rows):
+            X.append(row[:-1])
+            Y.append(row[-1])
+        # X = [table.rows[row.rid -1][:-1] for row in table.rows]
+        # Y = [table.rows[row.rid-1][-1] for row in table.rows]
             
         pca = PCA(n_components = n)
         pca.fit(X)

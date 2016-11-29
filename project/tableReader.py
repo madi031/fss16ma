@@ -1,7 +1,7 @@
 import sys, math, collections
 import num, sym, csvReader, arffReader, preprocess, learners, errorMeasurement, crossValidation, config, report
-import numpy, random
-
+import numpy, random, os
+import shutil
 
 class Row :
     rid = 0
@@ -146,7 +146,16 @@ def clone(table):
 
 
 if __name__ == "__main__":
-
+    # for dataset in config.datasets:
+    #     table = Table(dataset)
+    #     table = preprocess.preprocess().missingValue(table)
+    #     result = preprocess.preprocess().freq5bin(table)
+    #     for row in result.rows:
+    #         print row
+    directory = os.getcwd() + "/temp/"
+    if os.path.exists(directory):
+        shutil.rmtree(directory)
+    os.makedirs(directory)
     for dataset in config.datasets:
 
 
@@ -154,14 +163,11 @@ if __name__ == "__main__":
 
 
             table = Table(dataset)
-            #print table.showStats()
-            # if len(sys.argv) > 3:
-            #     solo_preprocess = sys.argv[2]
-            #     solo_learner = sys.argv[3]
-            # else:
             solo_preprocess = solo.split(' ')[0]
             solo_learner = solo.split(' ')[1]
-            
+
+            print "solo:" + solo
+
             table = preprocess.preprocess().missingValue(table)
             
             if solo_preprocess == "norm":
@@ -180,10 +186,31 @@ if __name__ == "__main__":
             if solo_learner == "pcr":
                 newTable = preprocess.preprocess().pca(newTable)
 
+
             errors = crossValidation.crossValidation().cv(newTable, solo_learner)
 
             dataset_name = dataset.split('/')[-1].split(".")[0]
 
-            crossValidation.crossValidation.error_metrics_to_file(dataset_name, solo, errors)     
+            crossValidation.crossValidation.error_metrics_to_file(directory + dataset_name, solo, errors)     
 
-        report.generateScottKnott(dataset_name + "_mar.txt")      
+        
+        print "MAR:"
+        report.generateScottKnott(directory + dataset_name + "_mar.txt")
+
+        print "MMRE:"
+        report.generateScottKnott(directory + dataset_name + "_mmre.txt")
+
+        print "MDMRE:"
+        report.generateScottKnott(directory + dataset_name + "_mdmre.txt")
+
+        print "MMER:"
+        report.generateScottKnott(directory + dataset_name + "_mmer.txt")
+
+        print "MBRE:"
+        report.generateScottKnott(directory + dataset_name + "_mbre.txt")
+
+        print "MIBRE:"
+        report.generateScottKnott(directory + dataset_name + "_mibre.txt")
+
+        print "Pred25:"
+        report.generateScottKnott(directory + dataset_name + "_pred25.txt")

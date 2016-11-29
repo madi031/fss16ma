@@ -27,7 +27,7 @@ class errorMeasurement:
         errorMeasures.mmer.append(float(mer) / max(len(ar), 1))
         errorMeasures.mbre.append(float(bre) / max(len(ar), 1))
         errorMeasures.mibre.append(float(ibre) / max(len(ar),1))
-        errorMeasures.pred25.append(float(sumPred25) / max(len(ar), 1))
+        errorMeasures.pred25.append(float(sumPred25) / max(len(ar), 1)*100)
         return errorMeasures
 
     def absoluteResidual(self):

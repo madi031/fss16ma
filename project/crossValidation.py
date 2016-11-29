@@ -42,8 +42,34 @@ class crossValidation:
 
                 x = errorMeasurement.errorMeasurement().calculateErrorMeasure(actual, predicted, errorMeasures)
         return x
+    
     @staticmethod
     def error_metrics_to_file(base_filename, solo, errors):
+        
         mar_file = open(base_filename + "_mar.txt", "a")
         for v in errors.mar :
             mar_file.write(solo + "," + str(v) + "\n")
+        
+        mmre_file = open(base_filename + "_mmre.txt", "a")
+        for v in errors.mmre :
+            mmre_file.write(solo + "," + str(v) + "\n")
+
+        mdmre_file = open(base_filename + "_mdmre.txt", "a")
+        for v in errors.mdmre :
+            mdmre_file.write(solo + "," + str(v) + "\n")
+
+        mmer_file = open(base_filename + "_mmer.txt", "a")
+        for v in errors.mmer :
+            mmer_file.write(solo + "," + str(v) + "\n")
+
+        mbre_file = open(base_filename + "_mbre.txt", "a")
+        for v in errors.mbre :
+            mbre_file.write(solo + "," + str(v) + "\n")
+
+        mibre_file = open(base_filename + "_mibre.txt", "a")
+        for v in errors.mibre :
+            mibre_file.write(solo + "," + str(v) + "\n")
+
+        pred25_file = open(base_filename + "_pred25.txt", "a")
+        for v in errors.pred25 :
+            pred25_file.write(solo + "," + str(v) + "\n")
