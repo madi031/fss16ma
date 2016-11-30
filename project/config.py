@@ -15,5 +15,5 @@ solos = [ 'norm cartNo','none cartNo', 'log cartNo', 'log abe0_1NN', 'pca plsr',
 
 #Datasets. Give a comma-separated paths to the datasets for which the learners are to be run
 #working => 
-datasets= [ "data/desharnais.arff"]#, "cocomo81.arff", "data/albrecht.arff", "data/china.arff", "data/kemerer.arff", "data/maxwell.arff"]
+datasets= [ "data/desharnais.arff", "data/cocomo81.arff", "data/albrecht.arff", "data/china.arff", "data/kemerer.arff", "data/maxwell.arff"]
 # not working => datasets = ["data/miyazaki94.arff"]

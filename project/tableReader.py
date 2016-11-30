@@ -157,6 +157,7 @@ if __name__ == "__main__":
         shutil.rmtree(directory)
     os.makedirs(directory)
     for dataset in config.datasets:
+        print '-------' + dataset.split('/')[-1].split(".")[0] + '--------'
 
 
         for solo in config.solos:
