@@ -186,8 +186,10 @@ if __name__ == "__main__":
             if solo_learner == "pcr":
                 newTable = preprocess.preprocess().pca(newTable)
 
-
-            errors = crossValidation.crossValidation().cv(newTable, solo_learner)
+            if config.crossval_loocv:
+                errors = crossValidation.crossValidation().cv(newTable, solo_learner, m = 1, n= len(newTable.rows))
+            else:
+                errors = crossValidation.crossValidation().cv(newTable, solo_learner, m = config.crossval_m, n = config.crossval_n)
 
             dataset_name = dataset.split('/')[-1].split(".")[0]
 
