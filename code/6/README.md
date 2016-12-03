@@ -164,7 +164,7 @@ Class = brickface, recall 0.92
 
 ###Incremental NB
 
-The result of the Incremental NB can ber found [here](https://github.com/madi031/fss16ma/tree/master/code/6/Output).
+The result of the Incremental NB can be found [here](https://github.com/madi031/fss16ma/tree/master/code/6/Output).
 
 ```
 Era 1
