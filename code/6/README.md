@@ -162,7 +162,7 @@ Class = path, recall 0.92
 Class = brickface, recall 0.92
 ```
 
-Incremental NB
+###Incremental NB
 
 The result of the Incremental NB can ber found [here](https://github.com/madi031/fss16ma/tree/master/code/6/Output).
 
@@ -201,7 +201,7 @@ Expected = path, 	 Predicted = sky, 	 Log of the likelihood = -84.31
 ...
 ```
 
-Anamoly Detector
+###Anamoly Detector
 A12 test is performed and if the score is greater than 0.7, it is detected as anamoly. The result of the Anamoly Detector can be found [here](https://github.com/madi031/fss16ma/tree/master/code/6/Output).
 
 ```
