@@ -43,18 +43,18 @@ if __name__ == "__main__":
 	table = tableReader.Table(sys.argv[1])
 	dg = DataGenerator(table)
 	data = dg.generateData()
-	# output = {'path': 0, 'window': 0, 'brickface': 0}
+	# output = {'path': 0, 'sky': 0, 'brickface': 0}
 	# for i, row in enumerate(data.rows):
 	# 	r = row.contents
 	# 	if (i >= 1000):
 	# 		break
 	# 	if r[-1] == 'path':
 	# 		output['path'] = output['path'] + 1
-	# 	elif r[-1] == 'window':
-	# 		output['window'] = output['window'] + 1
+	# 	elif r[-1] == 'sky':
+	# 		output['sky'] = output['sky'] + 1
 	# 	elif r[-1] == 'brickface':
 	# 		output['brickface'] = output['brickface'] + 1
 
 	# print 'path = ' + str(output['path'])
-	# print 'window = ' + str(output['window'])
+	# print 'sky = ' + str(output['sky'])
 	# print 'brickface = ' + str(output['brickface'])
