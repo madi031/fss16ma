@@ -9,32 +9,32 @@
 <td> #Attributes </td>
 </tr>
 <tr>
-<td> <a href="https://github.com/madi031/fss16ma/tree/master/code/8/Datasets"> iris </a> </td>
+<td> <a href="https://github.com/madi031/fss16ma/blob/master/code/8/Datasets/iris.arff"> iris </a> </td>
 <td> 150 </td>
 <td> 4 </td>
 </tr>
 <tr>
-<td> <a href="https://github.com/madi031/fss16ma/tree/master/code/8/Datasets"> credit-a </a> </td>
+<td> <a href="https://github.com/madi031/fss16ma/blob/master/code/8/Datasets/credit-a.arff"> credit-a </a> </td>
 <td> 690 </td>
 <td> 15 </td>
 </tr>
 <tr>
-<td> <a href="https://github.com/madi031/fss16ma/tree/master/code/8/Datasets"> vote </a> </td>
+<td> <a href="https://github.com/madi031/fss16ma/blob/master/code/8/Datasets/vote.arff"> vote </a> </td>
 <td> 435 </td>
 <td> 16 </td>
 </tr>
 <tr>
-<td> <a href="https://github.com/madi031/fss16ma/tree/master/code/8/Datasets"> sick </a> </td>
+<td> <a href="https://github.com/madi031/fss16ma/blob/master/code/8/Datasets/sick.arff"> sick </a> </td>
 <td> 3772 </td>
 <td> 30 </td>
 </tr>
 <tr>
-<td> <a href="https://github.com/madi031/fss16ma/tree/master/code/8/Datasets"> diabetes </a> </td>
+<td> <a href="https://github.com/madi031/fss16ma/blob/master/code/8/Datasets/diabetes.arff"> diabetes </a> </td>
 <td> 768 </td>
 <td> 8 </td>
 </tr>
 <tr>
-<td> <a href="https://github.com/madi031/fss16ma/tree/master/code/8/Datasets"> tic-tac-toe </a> </td>
+<td> <a href="https://github.com/madi031/fss16ma/blob/master/code/8/Datasets/tic-tac-toe.arff"> tic-tac-toe </a> </td>
 <td> 958 </td>
 <td> 9 </td>
 </tr>
