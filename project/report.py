@@ -9,4 +9,4 @@ def generateScottKnott(data_fileName):
             v.append(float(error))
             sk_dict[solo] = v
     
-    stats.rdivDemo([ [k] + v for k,v in sk_dict.items() ])
+    return stats.rdivDemo([ [k] + v for k,v in sk_dict.items() ])

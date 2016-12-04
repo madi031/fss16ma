@@ -787,12 +787,16 @@ def rdivDemo(data):
   last = None
   print(('%4s , %12s ,    %s   , %4s ' % \
                ('rank', 'name', 'med', 'iqr'))+ "\n"+ line)
+
+  temp_rank = []
   for _,__,x in sorted(ranks):
     q1,q2,q3 = x.quartiles()
     print(('%4s , %12s ,    %4s  ,  %4s ' % \
                  (x.rank+1, x.name, q2, q3 - q1))  + \
               xtile(x.all,lo=lo,hi=hi,width=30,show="%5.2f"))
+    temp_rank.append([x.rank+1, x.name])
     last = x.rank
+  return temp_rank
 
 
 def thing(x):
