@@ -1,5 +1,5 @@
 from __future__ import division
-import math
+import math, numpy, tableReader, crossValidation
 
 def max(x,y) : return x if x>y else y
 def min(x,y) : return x if x<y else y
@@ -59,3 +59,85 @@ class Num:
             result = num / denom
             result = result if result < 1 else 1
         return result if result > 0 else 10**-32
+
+  def equalWidthBin(table):        
+  for colPos in range(len(table.cols)-1):
+    allValues = [row[colPos] for row in table.rows]
+    maxValue = __builtins__.max(allValues)
+    minValue = __builtins__.min(allValues)
+
+    binWidth = (maxValue - minValue)/5
+    bins = [minValue + binWidth * i for i in range(10)]
+
+    allValues = numpy.digitize(allValues, bins)
+
+    for i, actual_value in enumerate(allValues):
+      table.rows[i][colPos] =  actual_value 
+  return bins, table
+
+  def equalWidthTestBin(bins, table):
+    for colPos in range(len(table.cols)-1):
+      allValues = [row[colPos] for row in table.rows]
+      allValues = numpy.digitize(allValues, bins)
+
+      for i, actual_value in enumerate(allValues):
+        table.rows[i][colPos] = actual_value
+    return table
+
+  def updateBinMaps(binMaps, binId, val):
+  if binId not in binMaps:
+    binMaps[binId] = (float('inf'), float('-inf'))
+  if val < binMaps[binId][0]:
+    val1 = binMaps[binId][1]
+    binMaps[binId] = (val, val1)
+  if val > binMaps[binId][1]:
+    val1 = binMaps[binId][0]
+    binMaps[binId] = (val1, val)
+  return binMaps
+
+def updateEdgeBins(binMaps):
+  for key, value in binMaps.items():
+    if value[0] == float('inf'):
+      val = value[1]
+      value = (float('-inf'), val)
+    if value[1] == float('-inf'):
+      val = value[0]
+      value[1] = (val, float('inf'))
+
+def equalFreqBin(table):
+  numOfInstances = len(table.rows)
+  binMaps = {}
+  for colPos in range(len(table.cols)-1):
+    allValues = {} 
+    for i, row in enumerate(table.rows):
+      allValues[i] = row[colPos]
+
+      sortedIndex = sorted(allValues, key=allValues.__getitem__)
+
+    for i, index in enumerate(sortedIndex):
+      binId = math.floor(i/math.ceil(numOfInstances/10.0)) + 1
+      binMaps = updateBinMaps(binMaps, binId, table.rows[index-1][colPos])
+      table.rows[index-1][colPos] = binId
+  updateEdgeBins(binMaps)
+  return binMaps, table
+
+def findBin(binMaps, val):
+  for key, value in binMaps.items():
+    if val >= value[0] and val <= value[1]:
+      return key
+
+def equalFreqTestBin(binMaps, table):
+  allValues = {}
+  for colPos in range(len(table.cols)-1):
+    for i, row in enumerate(table.rows):
+      allValues[i] = row[colPos]
+      sortedIndex = sorted(allValues, key=allValues.__getitem__)
+    for i, index in enumerate(sortedIndex):
+      table.rows[index-1][colPos] = findBin(binMaps, table.rows[index-1][colPos])
+  return table
+
+if __name__ == "__main__":
+    table = tableReader.Table('segment.arff')
+    n = Num()
+    newTable = n.equalWidthBin(table)
+
