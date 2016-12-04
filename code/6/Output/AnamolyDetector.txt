@@ -1,0 +1,153 @@
+Era 1
+Class = path, recall 0.81
+Class = sky, recall 0.88
+
+
+
+
+Era 2
+Class = path, recall 0.91
+Class = sky, recall 0.89
+
+
+
+
+Era 3
+Class = path, recall 0.91
+Class = sky, recall 0.89
+
+
+
+
+Era 4
+Class = path, recall 0.98
+Class = sky, recall 0.93
+
+
+
+
+Era 5
+Class = path, recall 0.94
+Class = sky, recall 0.96
+
+
+
+
+Era 6
+Class = path, recall 0.95
+Class = sky, recall 0.91
+
+
+
+
+Era 7
+Class = path, recall 0.98
+Class = sky, recall 0.98
+
+
+
+
+Era 8
+Class = path, recall 0.95
+Class = sky, recall 0.92
+
+
+
+
+Era 9
+Class = path, recall 0.98
+Class = sky, recall 0.98
+
+
+
+
+Era 10
+Class = path, recall 1.00
+Class = sky, recall 0.94
+Class = brickface, recall 0.00
+Anamoly detected
+
+
+
+
+
+Era 11
+Class = path, recall 1.00
+Class = sky, recall 0.78
+Class = brickface, recall 0.74
+
+
+
+
+Era 12
+Class = path, recall 0.88
+Class = sky, recall 0.72
+Class = brickface, recall 0.63
+
+
+
+
+Era 13
+Class = path, recall 1.00
+Class = sky, recall 0.74
+Class = brickface, recall 0.69
+
+
+
+
+Era 14
+Class = path, recall 1.00
+Class = sky, recall 0.79
+Class = brickface, recall 0.66
+
+
+
+
+Era 15
+Class = path, recall 1.00
+Class = sky, recall 0.73
+Class = brickface, recall 0.75
+
+
+
+
+Era 16
+Class = path, recall 0.90
+Class = sky, recall 0.77
+Class = brickface, recall 0.76
+
+
+
+
+Era 17
+Class = path, recall 1.00
+Class = sky, recall 0.78
+Class = brickface, recall 0.64
+
+
+
+
+Era 18
+Class = path, recall 1.00
+Class = sky, recall 0.76
+Class = brickface, recall 0.63
+
+
+
+
+Era 19
+Class = path, recall 0.89
+Class = sky, recall 0.72
+Class = brickface, recall 0.67
+
+
+
+
+Era 20
+Class = path, recall 0.96
+Class = sky, recall 0.75
+Class = brickface, recall 0.75
+
+
+
+

@@ -170,6 +170,7 @@ if __name__ == "__main__":
 
 
     for dataset in config.datasets:
+        print '-------' + dataset.split('/')[-1].split(".")[0] + '--------'
 
         dataset_name = dataset.split('/')[-1].split(".")[0]
         report_datasets[dataset_name] = {}
