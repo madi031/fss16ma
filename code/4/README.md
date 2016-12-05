@@ -1,6 +1,7 @@
+Code can be found [here](https://github.com/madi031/fss16ma/tree/master/code/4)
 
 #Diabetes
-
+```
 PD
 
 rank ,         name ,    med   ,  iqr 
@@ -16,10 +17,10 @@ rank ,         name ,    med   ,  iqr
    1 ,          kNN ,      59  ,    15 (     -----   * | ---          ),43.00, 52.00, 59.00, 66.00, 71.00
    1 ,       KMeans ,      61  ,    14 (         ---  *|  --          ),50.00, 56.00, 61.00, 67.00, 72.00
    1 ,       KDTree ,      66  ,    22 (        ------ | *      ----  ),48.00, 61.00, 66.00, 78.00, 86.00
-
+```
 
 #jedit-4.1
-
+```
 PD
 
 rank ,         name ,    med   ,  iqr 
@@ -35,9 +36,10 @@ rank ,         name ,    med   ,  iqr
    1 ,       KMeans ,      75  ,    33 (   ---------   |*        ---- ),50.00, 67.00, 75.00, 91.00, 100.00
    1 ,       KDTree ,      88  ,    31 (        -------|       *      ),60.00, 73.00, 88.00, 100.00, 100.00
 
+```
 
 #miyazaki94 
-
+```
 PD
 
 rank ,         name ,    med   ,  iqr 
@@ -53,7 +55,9 @@ rank ,         name ,    med   ,  iqr
    1 ,          kNN ,      11  ,    11 (         *     |              ), 0.00,  0.00, 11.00, 11.00, 11.00
    1 ,       KMeans ,      11  ,    11 (         *-----|---           ), 0.00,  0.00, 11.00, 11.00, 22.00
 
-
+```
+#Segment 
+```
 PD
 
 rank ,         name ,    med   ,  iqr 
@@ -78,6 +82,6 @@ jedit 		312		21			kNN			kNN
 Diabetes -  768		9			kNN			kNN
 Segment		2310 	19			KDTree		kNN
 
-
+```
 On the whole, kNN performs better than the other learners. 
 
