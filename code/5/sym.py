@@ -31,7 +31,11 @@ class Sym:
     print "Mode: " + str(i.mode) + "\tEntropy: " + str(i.ent())
     
   def norm(i,x)   : return x
-  
+    
   def dist(i,x,y) : return 0 if x==y else 1
   
   def furthest(i,x): return None
+  
+  def like(i,x,prior):
+    m = 2  
+    return (i.counts.get(x, 0) + m*prior)/(i.n + m)

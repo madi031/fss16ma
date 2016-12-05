@@ -1,5 +1,5 @@
 from __future__ import division
-import copy, Table, sys
+import copy, tableReader, sys
 
 class NaiveBayes: 
     def __init__(self,data):
@@ -11,7 +11,7 @@ class NaiveBayes:
         
         for row in self.table.rows :
             row_class = row[-1]
-            existing_table = self.tables.get(row_class, Table.clone(self.table))
+            existing_table = self.tables.get(row_class, tableReader.clone(self.table))
             existing_table.add_row(row.contents)
             self.tables[row_class] = existing_table
         
@@ -25,7 +25,7 @@ class NaiveBayes:
             for col in table.cols[:-1]:
                 if col.col:
                     x = row[col.pos]
-                    if x != Table.Column.UNKNOWN:
+                    if x != tableReader.Column.UNKNOWN:
                         like *= col.col.like( x, prior) # mult together all the likes
             vals[this] = like
             if like > best:
@@ -33,10 +33,8 @@ class NaiveBayes:
         return (row[-1], guess)
     
 
-if __name__ == "__main__":
-    naive = NaiveBayes(Table(sys.argv[1]))
-    test_table = Table(sys.argv[2])
-    for r in test_table: 
-            print "Row : ", r
-            print naive.predict(r)
+def learner(train_table, test_table):
+    naive = NaiveBayes(train_table)
+    results = [naive.predict(row) for row in test_table.rows]
+    return results
         
