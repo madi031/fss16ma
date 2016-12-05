@@ -1,5 +1,5 @@
 import sys, math, collections
-import num, sym, arffReader, numpy, random, crossValidation
+import num, sym, arffReader, numpy, random, crossValidation, preprocess
 
 
 class Row :
@@ -142,31 +142,10 @@ def clone(table):
         newTable.cols += [c]
     return newTable
 
-
-
-# if __name__ == "__main__":
-#     table = Table(sys.argv[1])
-#     #print table.showStats()
-
-
-#     #newTable = preprocess.preprocess().pca(table, len(table.cols)-1) 
-    
-#     table = preprocess.preprocess().missingValue(table)
-    
-#     newTable = preprocess.preprocess().norm(table) 
-
-#     # for row in newTable.rows:
-#     #     print row
-#     # # print learners.learners().pcr(table)
-
-#     crossValidation.crossValidation().cv(table)            
-# #     for row in table.rows:
-# #         print row    
-
 if __name__ == "__main__" :
     table = Table(sys.argv[1])
     print table.showStats()
     
+    # newTable = preprocess.preprocess().missingValue(table)
     crossValidation.crossValidation().cv(table)
-    for row in table.rows:
-        print row
+    
