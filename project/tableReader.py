@@ -146,12 +146,6 @@ def clone(table):
 
 
 if __name__ == "__main__":
-    # for dataset in config.datasets:
-    #     table = Table(dataset)
-    #     table = preprocess.preprocess().missingValue(table)
-    #     result = preprocess.preprocess().freq5bin(table)
-    #     for row in result.rows:
-    #         print row
     directory = os.getcwd() + "/temp/"
     if os.path.exists(directory):
         shutil.rmtree(directory)
@@ -165,9 +159,11 @@ if __name__ == "__main__":
     mdmre_report = {}
     pred25_report = {}
 
+    solos = [] 
     report_datasets = {}
-
-
+    for learner in config.learners:
+        for pre in config.preprocess:
+            solos.append(pre + ' ' + learner)
 
     for dataset in config.datasets:
         print '-------' + dataset.split('/')[-1].split(".")[0] + '--------'
@@ -175,7 +171,7 @@ if __name__ == "__main__":
         dataset_name = dataset.split('/')[-1].split(".")[0]
         report_datasets[dataset_name] = {}
 
-        for solo in config.solos:
+        for solo in solos:
 
 
             table = Table(dataset)
@@ -191,13 +187,16 @@ if __name__ == "__main__":
             elif solo_preprocess == "pca": 
                 newTable = preprocess.preprocess().pca(table, len(table.cols)-1)
             elif solo_preprocess == "freq5bin":
-                newTable = preprocess.preprocess().freq5bin(table)
+                newTable = preprocess.preprocess().freqBin(table, 5)
+            elif solo_preprocess == "freq3bin":
+                newTable = preprocess.preprocess().freqBin(table, 3)
             elif solo_preprocess == "log":
                 newTable = preprocess.preprocess().logarithm(table)
             elif solo_preprocess == "width5bin":
-                newTable = preprocess.preprocess().width5bin(table)
-            else:
-                newTable = table
+                newTable = preprocess.preprocess().widthBin(table, 5)
+            elif solo_preprocess == "width3bin":
+                newTable = preprocess.preprocess().widthBin(table, 3)
+            
 
             if solo_learner == "pcr":
                 newTable = preprocess.preprocess().pca(newTable)
@@ -211,7 +210,7 @@ if __name__ == "__main__":
 
             crossValidation.crossValidation.error_metrics_to_file(directory + dataset_name, solo, errors)     
 
-        
+
         print "MAR:"
         reportContent = report.generateScottKnott(directory + dataset_name + "_mar.txt")
         
@@ -228,7 +227,7 @@ if __name__ == "__main__":
 
 
         print "MMRE:"
-        report.generateScottKnott(directory + dataset_name + "_mmre.txt")
+        reportContent = report.generateScottKnott(directory + dataset_name + "_mmre.txt")
 
         for line in reportContent : 
             if str(line[1]) in mmre_report:
@@ -242,7 +241,7 @@ if __name__ == "__main__":
                 report_datasets[dataset_name][str(line[1])] = int(line[0])
 
         print "MDMRE:"
-        report.generateScottKnott(directory + dataset_name + "_mdmre.txt")
+        reportContent = report.generateScottKnott(directory + dataset_name + "_mdmre.txt")
 
         for line in reportContent : 
             if str(line[1]) in mdmre_report:
@@ -257,7 +256,7 @@ if __name__ == "__main__":
 
         
         print "MMER:"
-        report.generateScottKnott(directory + dataset_name + "_mmer.txt")
+        reportContent = report.generateScottKnott(directory + dataset_name + "_mmer.txt")
 
         for line in reportContent : 
             if str(line[1]) in mmer_report:
@@ -272,7 +271,7 @@ if __name__ == "__main__":
 
         
         print "MBRE:"
-        report.generateScottKnott(directory + dataset_name + "_mbre.txt")
+        reportContent = report.generateScottKnott(directory + dataset_name + "_mbre.txt")
 
         for line in reportContent : 
             if str(line[1]) in mbre_report:
@@ -288,7 +287,7 @@ if __name__ == "__main__":
 
         
         print "MIBRE:"
-        report.generateScottKnott(directory + dataset_name + "_mibre.txt")
+        reportContent = report.generateScottKnott(directory + dataset_name + "_mibre.txt")
 
         for line in reportContent : 
             if str(line[1]) in mibre_report:
@@ -301,11 +300,11 @@ if __name__ == "__main__":
             else:
                 report_datasets[dataset_name][str(line[1])] = int(line[0])
 
-        
+            
         print "Pred25:"
-        report.generateScottKnott(directory + dataset_name + "_pred25.txt")
+        reportContent = report.generateScottKnott(directory + dataset_name + "_pred25.txt")
 
-        for line in reportContent : 
+        for line in reportContent :
             if str(line[1]) in pred25_report:
                 pred25_report[str(line[1])] = pred25_report.get(str(line[1])) + int(line[0]) 
             else:
@@ -316,52 +315,191 @@ if __name__ == "__main__":
             else:
                 report_datasets[dataset_name][str(line[1])] = int(line[0])
 
+
+#For aggregating in terms of only the first ranked solos
+        # print "MAR:"
+        # reportContent = report.generateScottKnott(directory + dataset_name + "_mar.txt")
+        
+        # for line in reportContent : 
+        #     if line[0] == 1:
+        #         if str(line[1]) in mar_report:
+        #             mar_report[str(line[1])] = mar_report.get(str(line[1])) + int(line[0]) 
+        #         else:
+        #             mar_report[str(line[1])] = int(line[0])
+                
+        #         if str(line[1]) in report_datasets[dataset_name]:
+        #             report_datasets[dataset_name][str(line[1])] = report_datasets[dataset_name][str(line[1])] + int(line[0])
+        #         else:
+        #             report_datasets[dataset_name][str(line[1])] = int(line[0])
+
+
+        # print "MMRE:"
+        # reportContent = report.generateScottKnott(directory + dataset_name + "_mmre.txt")
+
+        # for line in reportContent : 
+        #     if line[0] == 1:
+        #         if str(line[1]) in mmre_report:
+        #             mmre_report[str(line[1])] = mmre_report.get(str(line[1])) + int(line[0]) 
+        #         else:
+        #             mmre_report[str(line[1])] = int(line[0])
+
+        #         if str(line[1]) in report_datasets[dataset_name]:
+        #             report_datasets[dataset_name][str(line[1])] = report_datasets[dataset_name][str(line[1])] + int(line[0])
+        #         else:
+        #             report_datasets[dataset_name][str(line[1])] = int(line[0])
+
+        # print "MDMRE:"
+        # reportContent = report.generateScottKnott(directory + dataset_name + "_mdmre.txt")
+
+        # for line in reportContent : 
+        #     if line[0] == 1:
+        #         if str(line[1]) in mdmre_report:
+        #             mdmre_report[str(line[1])] = mdmre_report.get(str(line[1])) + int(line[0]) 
+        #         else:
+        #             mdmre_report[str(line[1])] = int(line[0])
+
+        #         if str(line[1]) in report_datasets[dataset_name]:
+        #             report_datasets[dataset_name][str(line[1])] = report_datasets[dataset_name][str(line[1])] + int(line[0])
+        #         else:
+        #             report_datasets[dataset_name][str(line[1])] = int(line[0])
+
+        
+        # print "MMER:"
+        # reportContent = report.generateScottKnott(directory + dataset_name + "_mmer.txt")
+
+        # for line in reportContent : 
+        #     if line[0] == 1:
+        #         if str(line[1]) in mmer_report:
+        #             mmer_report[str(line[1])] = mmer_report.get(str(line[1])) + int(line[0]) 
+        #         else:
+        #             mmer_report[str(line[1])] = int(line[0])
+
+        #         if str(line[1]) in report_datasets[dataset_name]:
+        #             report_datasets[dataset_name][str(line[1])] = report_datasets[dataset_name][str(line[1])] + int(line[0])
+        #         else:
+        #             report_datasets[dataset_name][str(line[1])] = int(line[0])
+
+        
+        # print "MBRE:"
+        # reportContent = report.generateScottKnott(directory + dataset_name + "_mbre.txt")
+
+        # for line in reportContent : 
+        #     if line[0] == 1:
+
+        #         if str(line[1]) in mbre_report:
+        #             mbre_report[str(line[1])] = mbre_report.get(str(line[1])) + int(line[0]) 
+        #         else:
+        #             mbre_report[str(line[1])] = int(line[0])
+
+        #         if str(line[1]) in report_datasets[dataset_name]:
+        #             report_datasets[dataset_name][str(line[1])] = report_datasets[dataset_name][str(line[1])] + int(line[0])
+        #         else:
+        #             report_datasets[dataset_name][str(line[1])] = int(line[0])
+
+
+        
+        # print "MIBRE:"
+        # reportContent = report.generateScottKnott(directory + dataset_name + "_mibre.txt")
+
+        # for line in reportContent : 
+        #     if line[0] == 1:
+        #         if str(line[1]) in mibre_report:
+        #             mibre_report[str(line[1])] = mibre_report.get(str(line[1])) + int(line[0]) 
+        #         else:
+        #             mibre_report[str(line[1])] = int(line[0])
+
+        #         if str(line[1]) in report_datasets[dataset_name]:
+        #             report_datasets[dataset_name][str(line[1])] = report_datasets[dataset_name][str(line[1])] + int(line[0])
+        #         else:
+        #             report_datasets[dataset_name][str(line[1])] = int(line[0])
+
+            
+        # print "Pred25:"
+        # reportContent = report.generateScottKnott(directory + dataset_name + "_pred25.txt")
+
+        # for line in reportContent :
+        #     if line[0] == 1: 
+        #         if str(line[1]) in pred25_report:
+        #             pred25_report[str(line[1])] = pred25_report.get(str(line[1])) + int(line[0]) 
+        #         else:
+        #             pred25_report[str(line[1])] = int(line[0])
+
+        #         if str(line[1]) in report_datasets[dataset_name]:
+        #             report_datasets[dataset_name][str(line[1])] = report_datasets[dataset_name][str(line[1])] + int(line[0])
+        #         else:
+        #             report_datasets[dataset_name][str(line[1])] = int(line[0])
+
+
+    mar_file = open(directory + "mar.txt", "a")
+    dataset_file = open(directory + "data.txt", "a")
+        
+
+    print "********* MAR **********"  
+    mar_file.write("********* MAR **********" + "\n")
+    sortedIndex = sorted(mar_report, key=mar_report.__getitem__)        
+    for i, index in enumerate(sortedIndex):
+        print index, mar_report[index]
+        mar_file.write(str(index) + "," + str(mar_report[index]) + "\n")
     
-    # print "********* MAR **********"  
-    # sortedIndex = sorted(mar_report, key=mar_report.__getitem__)        
-    # for i, index in enumerate(sortedIndex):
-    #     print index, mar_report[index]
-    
-    # print "********* MMER **********" 
-    # sortedIndex = sorted(mmer_report, key=mmer_report.__getitem__)        
-    # for i, index in enumerate(sortedIndex):
-    #     print index, mmer_report[index]
+    print "********* MMER **********" 
+    mar_file.write("********* MMER **********" + "\n")
+    sortedIndex = sorted(mmer_report, key=mmer_report.__getitem__)        
+    for i, index in enumerate(sortedIndex):
+        print index, mmer_report[index]
+        mar_file.write(str(index) + "," + str(mmer_report[index]) + "\n")
 
-    # print "********* MDMRE **********"  
-    # sortedIndex = sorted(mdmre_report, key=mdmre_report.__getitem__)        
-    # for i, index in enumerate(sortedIndex):
-    #     print index, mdmre_report[index]
+    print "********* MDMRE **********"  
+    mar_file.write("********* MDMRE **********" + "\n")
+    sortedIndex = sorted(mdmre_report, key=mdmre_report.__getitem__)        
+    for i, index in enumerate(sortedIndex):
+        print index, mdmre_report[index]
+        mar_file.write(str(index) + "," + str(mdmre_report[index]) + "\n")
 
-    # print "********* MMRE **********"  
-    # sortedIndex = sorted(mmre_report, key=mmre_report.__getitem__)        
-    # for i, index in enumerate(sortedIndex):
-    #     print index, mmre_report[index]
+    mar_file.write("********* MMRE **********" + "\n")
+    print "********* MMRE **********"  
+    sortedIndex = sorted(mmre_report, key=mmre_report.__getitem__)        
+    for i, index in enumerate(sortedIndex):
+        print index, mmre_report[index]
+        mar_file.write(str(index) + "," + str(mmre_report[index]) + "\n")
 
-    # print "********* MBRE **********"  
-    # sortedIndex = sorted(mbre_report, key=mbre_report.__getitem__)        
-    # for i, index in enumerate(sortedIndex):
-    #     print index, mbre_report[index]
+    print "********* MBRE **********" 
+    mar_file.write("********* MBRE **********" + "\n") 
+    sortedIndex = sorted(mbre_report, key=mbre_report.__getitem__)        
+    for i, index in enumerate(sortedIndex):
+        print index, mbre_report[index]
+        mar_file.write(str(index) + "," + str(mbre_report[index]) + "\n")
 
-    # print "********* MIBRE **********"  
-    # sortedIndex = sorted(mibre_report, key=mibre_report.__getitem__)        
-    # for i, index in enumerate(sortedIndex):
-    #     print index, mibre_report[index]
+    print "********* MIBRE **********" 
+    mar_file.write("********* MIBRE **********" + "\n") 
+    sortedIndex = sorted(mibre_report, key=mibre_report.__getitem__)        
+    for i, index in enumerate(sortedIndex):
+        print index, mibre_report[index]
+        mar_file.write(str(index) + "," + str(mibre_report[index]) + "\n")
 
-    # print "********* PRED25 **********"  
-    # sortedIndex = sorted(pred25_report, key=pred25_report.__getitem__)        
-    # for i, index in enumerate(sortedIndex):
-    #     print index, pred25_report[index]
+    print "********* PRED25 **********"  
+    mar_file.write("********* PRED25 **********" + "\n")
+    sortedIndex = sorted(pred25_report, key=pred25_report.__getitem__)        
+    for i, index in enumerate(sortedIndex):
+        print index, pred25_report[index]
+        mar_file.write(str(index) + "," + str(pred25_report[index]) + "\n")
 
     final_report = {}
     
     for i in report_datasets.keys():
-    #    print "*********** dataset- " + i + " ******"
+        print "*********** dataset- " + i + " ******"
+        dataset_file.write("*********** dataset- " + i + " ******\n" )
         sortedIndex = sorted(report_datasets[i], key=report_datasets[i].__getitem__)        
         for index in sortedIndex:
-            #print index, report_datasets[i][index]
+            print index, report_datasets[i][index]
+            dataset_file.write(index + "," + str(report_datasets[i][index]) + "\n" )
             if index in final_report:
                 final_report[index] = final_report[index] + report_datasets[i][index]
             else:
                 final_report[index] = report_datasets[i][index]
 
+    final_file = open(directory + "final.txt","a")
+
     print final_report
+    for k, v in final_report.items():
+        final_file.write(k+ "," + str(final_report[k])+"\n")
+    print len(final_report)

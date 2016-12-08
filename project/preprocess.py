@@ -45,14 +45,14 @@ class preprocess:
     	
         return table
 
-    def width5bin(self, table):        
+    def widthBin(self, table, size = 5):        
         for colPos in range(len(table.cols)-1):
             allValues = [row[colPos] for row in table.rows]
             maxValue = max(allValues)
             minValue = min(allValues)
             
-            binWidth = (maxValue - minValue)/5
-            bins = [minValue + binWidth * i for i in range(5)]
+            binWidth = (maxValue - minValue)/size
+            bins = [minValue + binWidth * i for i in range(size)]
 
             allValues = numpy.digitize(allValues, bins)
 
@@ -60,7 +60,7 @@ class preprocess:
                 table.rows[i][colPos] =  actual_value 
         return table
 
-    def freq5bin(self, table):
+    def freqBin(self, table, size = 5):
         numOfInstances = len(table.rows)
         
         for colPos in range(len(table.cols)-1):
@@ -71,7 +71,7 @@ class preprocess:
             sortedIndex = sorted(allValues, key=allValues.__getitem__)
             
             for i, index in enumerate(sortedIndex):
-                table.rows[index-1][colPos] = math.floor(i/math.ceil(numOfInstances/5.0)) + 1
+                table.rows[index-1][colPos] = math.floor(i/math.ceil(numOfInstances/float(size))) + 1
         
         return table
 

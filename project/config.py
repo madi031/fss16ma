@@ -1,19 +1,18 @@
 #Cross-validation
 #For leave-one-out crossvalidation, put crossval_loocv = True
-crossval_loocv=True
+crossval_loocv=False
 crossval_m = 5
 crossval_n = 5
 
-
-#Solos
-solos = [ 'norm cartNo','none cartNo', 'log cartNo', 'log abe0_1NN', 'pca plsr', \
-'none plsr', 'pca pcr', 'none pcr', 'pca cartNo', 'norm abe0_1NN','none abe0_1NN',\
- 'freq5bin cartNo','freq5bin abe0_5NN', 'width5bin cartNo', 'norm abe0_5NN', \
- 'none abe0_5NN', 'log abe0_5NN', 'pca abe0_5NN', 'width5bin abe0_1NN',\
- 'none lReg', 'norm plsr', 'width5bin abe0_5NN', 'norm lReg', 'freq5bin abe0_1NN', 'pca abe0_1NN']
-# solos = ['none abe0_1NN', 'freq5bin cartNo']
+learners = ['cartNo', 'abe0_1NN', 'abe0_5NN', 'plsr','pcr','lReg']
+preprocess = ['freq3bin','width3bin','norm', 'none','log','pca','width5bin','freq5bin']
 
 #Datasets. Give a comma-separated paths to the datasets for which the learners are to be run
-#working => 
-datasets= [ "data/desharnais.arff", "data/cocomo81.arff", "data/albrecht.arff", "data/china.arff", "data/kemerer.arff", "data/maxwell.arff"]
-# not working => datasets = ["data/miyazaki94.arff"]
+
+datasets= [ "data/desharnais.arff", "data/cocomo81.arff", "data/albrecht.arff", "data/china.arff", \
+"data/kemerer.arff", "data/maxwell.arff","data/diabetes.arff", "data/ivy-1.1.arff", "data/miyazaki94.arff",\
+"data/jedit-4.1.arff"]
+
+# datasets = ["data/miyazaki94.arff",\
+# "data/jedit-4.1.arff"]
+

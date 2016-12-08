@@ -37,9 +37,7 @@ class crossValidation:
                     actual, predicted = learners.learners().abe0_kNN(trainData, testData, 1)
                 elif learner == "abe0_5NN":
                     actual, predicted = learners.learners().abe0_kNN(trainData, testData, 5)
-                else:
-                    actual, predicted = learners.learners().lReg(trainData,testData)
-
+                
                 x = errorMeasurement.errorMeasurement().calculateErrorMeasure(actual, predicted, errorMeasures)
         return x
     
