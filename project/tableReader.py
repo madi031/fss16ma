@@ -430,7 +430,7 @@ if __name__ == "__main__":
         #             report_datasets[dataset_name][str(line[1])] = int(line[0])
 
 
-    mar_file = open(directory + "mar.txt", "a")
+    mar_file = open(directory + "error.txt", "a")
     dataset_file = open(directory + "data.txt", "a")
         
 
